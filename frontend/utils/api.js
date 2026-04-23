@@ -197,6 +197,65 @@ export const updateApplicationStatus = async(applicationId, status, response, to
     return data;
 };
 
+// ================= ADMIN =================
+
+export const getAdminOverview = async(token) => {
+    const res = await fetch(`${BASE_URL}/admin/overview`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+
+    return res.json();
+};
+
+export const updateRecruiterApproval = async(userId, isApproved, token) => {
+    const res = await fetch(`${BASE_URL}/admin/users/${userId}/approval`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ isApproved })
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+        throw new Error(data?.message || data?.error || "Request failed");
+    }
+    return data;
+};
+
+export const deleteUserByAdmin = async(userId, token) => {
+    const res = await fetch(`${BASE_URL}/admin/users/${userId}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+        throw new Error(data?.message || data?.error || "Request failed");
+    }
+    return data;
+};
+
+export const deleteJobByAdmin = async(jobId, token) => {
+    const res = await fetch(`${BASE_URL}/admin/jobs/${jobId}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+        throw new Error(data?.message || data?.error || "Request failed");
+    }
+    return data;
+};
+
 // ================= UTILS =================
 
 // Decode JWT token (simple, no verification on frontend)

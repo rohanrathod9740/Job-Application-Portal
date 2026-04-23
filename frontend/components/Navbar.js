@@ -6,6 +6,9 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
 const NAV_LINKS = {
+  admin: [
+    { href: "/admin", label: "Admin" },
+  ],
   recruiter: [
     { href: "/recruiter-dashboard", label: "Workspace" },
     { href: "/post-job", label: "Post Job" },

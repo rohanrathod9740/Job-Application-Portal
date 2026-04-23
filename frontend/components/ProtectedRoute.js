@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import Loader from "./Loader";
 
 const DEFAULT_REDIRECTS = {
+  admin: "/admin",
   recruiter: "/recruiter-dashboard",
   user: "/dashboard",
 };

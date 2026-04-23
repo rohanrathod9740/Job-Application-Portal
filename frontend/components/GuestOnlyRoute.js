@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import Loader from "./Loader";
 
 const DESTINATIONS = {
+  admin: "/admin",
   recruiter: "/recruiter-dashboard",
   user: "/dashboard",
 };

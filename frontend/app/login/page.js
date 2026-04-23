@@ -29,7 +29,11 @@ export default function Login() {
       if (response?.token && response?.user) {
         login(response.user, response.token);
         router.push(
-          response.user.role === "recruiter" ? "/recruiter-dashboard" : "/dashboard"
+          response.user.role === "admin"
+            ? "/admin"
+            : response.user.role === "recruiter"
+              ? "/recruiter-dashboard"
+              : "/dashboard"
         );
         return;
       }
@@ -61,10 +65,11 @@ export default function Login() {
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
             <div>
               <label className="mb-2 block text-sm font-semibold">Role</label>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-3 gap-3">
                 {[
                   { value: "user", label: "Job Seeker" },
                   { value: "recruiter", label: "Recruiter" },
+                  { value: "admin", label: "Admin" },
                 ].map((option) => (
                   <button
                     key={option.value}
