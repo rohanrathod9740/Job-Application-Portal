@@ -39,14 +39,14 @@ exports.register = async(req, res) => {
             role: normalizedRole,
             companyName: normalizedRole === "recruiter" ? companyName : "",
             companyEmail: normalizedRole === "recruiter" ? companyEmail : "",
-            isApproved: true
+            isApproved: normalizedRole === "recruiter" ? false : true
         });
 
         await user.save();
 
         res.status(201).json({
             message: normalizedRole === "recruiter"
-                ? "Recruiter account created successfully"
+                ? "Recruiter account created. Admin approval is required before login."
                 : "User registered successfully"
         });
 
@@ -60,7 +60,13 @@ exports.login = async(req, res) => {
     try {
         const { email, password, role } = req.body;
         const requestedRole =
-            role === "recruiter" ? "recruiter" : role === "user" ? "user" : null;
+            role === "recruiter"
+                ? "recruiter"
+                : role === "admin"
+                    ? "admin"
+                    : role === "user"
+                        ? "user"
+                        : null;
 
         if (!requestedRole) {
             return res.status(400).json({ message: "Role is required for login" });
@@ -75,6 +81,12 @@ exports.login = async(req, res) => {
         if (user.role !== requestedRole) {
             return res.status(403).json({
                 message: `This account is registered as a ${user.role}.`
+            });
+        }
+
+        if (user.role === "recruiter" && !user.isApproved) {
+            return res.status(403).json({
+                message: "Your recruiter account is pending admin approval."
             });
         }
 

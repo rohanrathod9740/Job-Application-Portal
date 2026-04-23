@@ -15,4 +15,7 @@ module.exports = {
     mongoUri: process.env.MONGO_URI,
     jwtSecret: process.env.JWT_SECRET,
     clientUrl: process.env.CLIENT_URL || "http://localhost:3000",
+    adminName: process.env.ADMIN_NAME || "Platform Admin",
+    adminEmail: process.env.ADMIN_EMAIL || "",
+    adminPassword: process.env.ADMIN_PASSWORD || "",
 };

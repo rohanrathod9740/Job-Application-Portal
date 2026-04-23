@@ -62,6 +62,9 @@ npm run dev
 - `MONGO_URI`
 - `JWT_SECRET`
 - `CLIENT_URL`
+- `ADMIN_NAME`
+- `ADMIN_EMAIL`
+- `ADMIN_PASSWORD`
 
 ### Frontend
 
@@ -70,5 +73,5 @@ npm run dev
 ## Notes
 
 - Sensitive values are intentionally excluded from version control.
+- If `ADMIN_EMAIL` and `ADMIN_PASSWORD` are provided, the backend bootstraps an admin account automatically.
 - Generated directories such as `node_modules` and build output should not be committed.
-

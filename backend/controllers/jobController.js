@@ -36,6 +36,10 @@ exports.createJob = async(req, res) => {
             createdBy: req.user._id
         });
 
+        if (req.user.role === "recruiter" && !req.user.isApproved) {
+            return res.status(403).json({ message: "Your recruiter account is not approved yet" });
+        }
+
         await job.save();
 
         res.status(201).json({ message: "Job created", job });
@@ -92,7 +96,7 @@ exports.updateJob = async(req, res) => {
             return res.status(404).json({ message: "Job not found" });
         }
 
-        if (job.createdBy.toString() !== req.user._id.toString()) {
+        if (req.user.role !== "admin" && job.createdBy.toString() !== req.user._id.toString()) {
             return res.status(403).json({ message: "Not authorized" });
         }
 
@@ -130,7 +134,7 @@ exports.closeJob = async(req, res) => {
             return res.status(404).json({ message: "Job not found" });
         }
 
-        if (job.createdBy.toString() !== req.user._id.toString()) {
+        if (req.user.role !== "admin" && job.createdBy.toString() !== req.user._id.toString()) {
             return res.status(403).json({ message: "Not authorized" });
         }
 
@@ -155,7 +159,7 @@ exports.deleteJob = async(req, res) => {
             return res.status(404).json({ message: "Job not found" });
         }
 
-        if (job.createdBy.toString() !== req.user._id.toString()) {
+        if (req.user.role !== "admin" && job.createdBy.toString() !== req.user._id.toString()) {
             return res.status(403).json({ message: "Not authorized" });
         }
 
